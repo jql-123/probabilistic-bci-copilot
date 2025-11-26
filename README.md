@@ -6,7 +6,6 @@
 
 > **Paper**: "Probabilistic Copilot for Safe Brain–Computer Interfaces"
 > **Authors**: Lee Jia Qie
-> **Course**: CS6101: Rational Approaches to Cooperative AI, NUS
 > **Date**: November 2025
 
 ## Overview
@@ -18,13 +17,13 @@ This repository contains the complete implementation of a probabilistic Brain-Co
 - **64.9% pooled accuracy** across 4 participants (148 trials)
 - **Massive individual variability** (CV=34.9%, range: 27.0%–86.5%)
 - **ErrP correction fails** due to false positive asymmetry and weak posterior alternatives
-- **Theoretical bounds established** for error correction in cooperative AI systems
+- **Theoretical bounds established** for simple error correction in cooperative AI systems
 
 ### Research Contributions
 
 1. **Principled probabilistic framework** using Gen.jl Bayesian inference with entropy thresholds
 2. **Empirical demonstration** that individual variability demands personalized assistance policies
-3. **Theoretical analysis** showing why simple error correction fails in high-accuracy systems
+3. **Theoretical analysis** showing fundamental limits of simple error correction in cooperative AI systems
 
 ## Quick Start
 
@@ -41,30 +40,23 @@ pip install numpy scipy matplotlib pandas
 ### Run the Analysis
 
 ```bash
-# Generate all publication results from real experimental data
-python generate_publication_results.py
+# Generate all results from real experimental data
+python generate_results.py
 ```
 
-This will generate:
-- `figures/figure2_multi_participant_results_from_data.png`
-- `figures/figure3_errp_barriers_from_data.png`
-- `results/experimental_results_table.csv`
+This will generate figures and experimental results from real data.
 
-### Expected Output
-
-```
-📊 Pooled results: 64.9%, 59.5%, 66.9%
-📈 Coefficient of Variation: 34.9%
-🎯 OVERALL VERIFICATION: ✅ PASSED
-```
 
 ## System Architecture
+
+![System Overview](figures/figure1_system_overview.png)
+
+The system uses an 8-target uniform spatial prior that discovers only 4 targets are actually used in the task:
 
 ```
 Neural Features + Cursor Movement → Gen.jl Bayesian Model → Posterior P(θ|obs) → Decision
                                          ↑
-                                   ErrP Feedback
-                                   (70% sensitivity, 8% FPR)
+                                   ErrP Feedback (70% sensitivity, 8% FPR)
 ```
 
 ### Core Components
@@ -99,6 +91,8 @@ Neural Features + Cursor Movement → Gen.jl Bayesian Model → Posterior P(θ|o
 
 ### 2. Why ErrP Correction Fails
 
+![Multi-Participant Performance](figures/figure2_multi_participant_results_from_data.png)
+
 **Mathematical Barrier: False Positive Asymmetry**
 - High performers make few errors (correct decisions >> errors)
 - 8% false positive rate affects all correct clicks
@@ -108,6 +102,8 @@ Neural Features + Cursor Movement → Gen.jl Bayesian Model → Posterior P(θ|o
 - When copilot is wrong (78% confidence), second-best is weak (15% confidence)
 - Retry success rate: only 27%
 - Weak alternatives limit correction effectiveness
+
+![ErrP Correction Barriers](figures/figure3_errp_barriers_from_data.png)
 
 ### 3. Individual Differences
 
@@ -192,15 +188,6 @@ All results are **fully reproducible** from real experimental data:
 3. **Literature-based parameters**: ErrP rates from Chavarriaga & Millán (2010)
 4. **Data validation**: H1 baseline must reproduce 70.3% ± 1%
 
-### Validation Checkpoints
-
-```python
-# Critical validation points
-assert abs(h1_baseline - 70.3) < 1.0        # H1 baseline accuracy
-assert total_trials == 148                   # Sample size
-assert abs(cv - 34.9) < 1.0                 # Coefficient of variation
-assert pooled_baseline == 64.9              # Pooled accuracy
-```
 
 ## Research Impact
 
@@ -220,29 +207,11 @@ Establishes theoretical framework for confidence-aware deference. Entropy-based 
 3. **Active learning**: Query for clarification when entropy is high
 4. **Real-time validation**: Test with actual EEG-based ErrP detection
 
-## Citation
-
-```bibtex
-@article{lee2025probabilistic,
-  title={Probabilistic Copilot for Safe Brain–Computer Interfaces},
-  author={Lee, Jia Qie},
-  journal={CS6101: Rational Approaches to Cooperative AI},
-  institution={National University of Singapore},
-  year={2025}
-}
-```
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## Contact
-
-- **Author**: Lee Jia Qie
-- **Email**: jiaqie.lee@ngmail.com
-- **Institution**: National University of Singapore
-- **Course**: CS6101: Rational Approaches to Cooperative AI
-
 ---
 
-*This work demonstrates how probabilistic reasoning and explicit uncertainty quantification enable safe human-AI cooperation in safety-critical domains.*
+*This work demonstrates fundamental limits of simple error correction in cooperative AI systems, highlighting both the promise and limitations of human-AI collaboration in safety-critical domains.*
