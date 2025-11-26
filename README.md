@@ -188,6 +188,15 @@ All results are **fully reproducible** from real experimental data:
 3. **Literature-based parameters**: ErrP rates from Chavarriaga & Millán (2010)
 4. **Data validation**: H1 baseline must reproduce 70.3% ± 1%
 
+## Data
+
+This work uses real experimental data from brain-computer interface sessions:
+
+**Dataset**: [Brain-computer interface control with artificial intelligence copilots](https://zenodo.org/records/15165133)
+**DOI**: 10.5281/zenodo.15165133
+**Format**: Multi-participant BCI cursor control with neural features and movement trajectories
+
+The dataset contains neural recordings and cursor movement data from 4 participants (H1, H2, H4, S2) performing spatial target selection tasks, providing the empirical foundation for all reported results.
 
 ## Research Impact
 
